@@ -1,0 +1,35 @@
+name: Netlify Deploy
+
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the deployment
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          
+      - name: Build and deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: YOUR_NETLIFY_SITE_ID  # Replace with your Netlify site ID
+        run: |
+          # Build the production version of your app here if needed
+          # For example, if you are using Flask, you can run: flask build
+          
+          # Deploy to Netlify
+          curl -X POST "https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/deploy" \
+          -H "Authorization: Bearer ${NETLIFY_AUTH_TOKEN}"
