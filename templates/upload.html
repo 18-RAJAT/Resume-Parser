@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PDF Upload</title>
+    <title>Resume Parser</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1 class="head">Check Your Category</h1>
     <div class="container">
         <div class="left">
             <form class="form" action="{{ url_for('process_upload') }}" method="POST" enctype="multipart/form-data">
+                <label class="up">Upload your Resume Here</label>
                 <input class="inp" type="file" name="pdf_file" accept=".pdf" required>
                 <input class="UploadBtn" type="submit" value="Upload">
                 {% if upload_error %}
@@ -17,9 +17,10 @@
             </form>
         </div>
         <div class="right">
+            <h1>Resume Analyser</h1>
             {% if predicted_categories %}
             <div class="result">
-                <h2>Predicted Categories:</h2>
+                <h2>Your Basic Info</h2>
                 <ul>
                     {% for category in predicted_categories %}
                     <li>{{ category }}</li>
