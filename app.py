@@ -1,13 +1,19 @@
-import PyPDF2
+import PyPDF2#Portable Document Format
 import re
 from flask import Flask, render_template, request
 from cleanResume import cleanResume
 import pickle
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer#NLP
+
+#Pickle allows you to save complex Python data structures (like lists, dictionaries, objects, etc.) to a file on disk
+
+#NLP
+#NLP involves various techniques and algorithms to process and analyze text data, such as written documents, social media posts, emails, chat messages, and more. Some of the common tasks in NLP include
 
 app = Flask(__name__)
 
+#via rb=read binary->used for Non-textual data/Probability/Efficient for binary files
 # Load the category mapping dictionary
 with open('category_mapping.pkl', 'rb') as file:
     category_mapping = pickle.load(file)
@@ -34,6 +40,7 @@ def process_upload():
         # Clean the extracted text using cleanResume function
         cleaned_text = cleanResume(text)
         print(cleaned_text)
+        
         # Load the TfidfVectorizer used for feature extraction
         with open('vectorizer.pkl', 'rb') as file:
             vectorizer = pickle.load(file)
